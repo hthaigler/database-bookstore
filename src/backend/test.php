@@ -1,5 +1,6 @@
 <?php
 include 'connect.php';
+$link = connect("host", "username", "password", "database")
 $query = 'SELECT * FROM employee';
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
 
@@ -8,5 +9,4 @@ while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
 }
 // Actually would assign data to php object, and json encode
 mysql_free_result($result);
-
 ?>
