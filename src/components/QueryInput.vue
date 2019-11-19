@@ -11,7 +11,6 @@
           v-model="query"
           placeholder="Enter SQL query..."
           rows="4"
-          max-rows="6"
         ></b-form-textarea>
       </b-form-group>
 
