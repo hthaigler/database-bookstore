@@ -1,7 +1,6 @@
 -- ****************** SqlDBM: MySQL ******************;
 -- ***************************************************;
 
-USE cah0077db;
 -- ************************************** `employee`
 
 CREATE TABLE `employees`
@@ -117,7 +116,7 @@ CONSTRAINT `FK_84` FOREIGN KEY `fkIdx_84` (`order_id`) REFERENCES `order` (`orde
 -- ************************************** `employees`
 INSERT INTO `employees` 
 (
- `employee_id`, `first_name`, `last_name`, `phone`
+ `employee_id`, `first_name`, `last_name`
 )
 VALUES 
 (1, 'firstname5', 'lastname5'),
