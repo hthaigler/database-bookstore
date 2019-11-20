@@ -7,13 +7,13 @@
         description="Query the database. No DROP allowed"
       >
         <b-form-textarea
+          :readonly="!editable"
           id="query"
           v-model="query"
           placeholder="Enter SQL query..."
           rows="4"
         ></b-form-textarea>
       </b-form-group>
-
 
       <b-button type="submit" variant="primary"
         :disabled="hasDROP"
@@ -28,18 +28,35 @@
 <script>
 export default {
   name: 'QueryInput',
-  props: {
-  },
   data() {
     return {
-      query: '',
+      query: this.queryIn,
+    }
+  },
+  props: {
+    queryIn: {
+      type: String,
+      default: ''
+    },
+    editable: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
     onSubmit() {
       if (this.hasDROP) {
         return
-      }
+      }      
+      this.axios
+        .get('https://webhome.auburn.edu/~cah0077/api/query.php', {
+           params: {          
+            'query': this.query
+          }
+        })
+        .then(response => {
+          this.$emit('success', response)
+        })
     }
   },
   computed: {
