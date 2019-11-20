@@ -1,4 +1,5 @@
 <?php
+  header("Access-Control-Allow-Origin: https://bookstore.harrisonhaigler.com");
   define(HOST,  "");
   define(USERNAME,  "");
   define(PASSWORD,  "");

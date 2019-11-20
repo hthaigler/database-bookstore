@@ -1,4 +1,3 @@
--- USE table-name;
 drop table employees;
 drop table customers;
 drop table suppliers;
