@@ -16,9 +16,11 @@
 		$queryLower = strtolower($query);
 		if (!$result) {
 			$output = "Query failed: " . mysql_error();
+			header('HTTP/1.1 422 Unprocessable Entity');
 		}
 		else if (is_bool($result)) {
 			$output = "Query successful! Database has been updated accordingly!";
+			header('HTTP/1.1 205 Reset Content');
 		}
 		else {
 			$data = getDataArray($result);

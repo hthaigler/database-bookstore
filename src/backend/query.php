@@ -1,6 +1,6 @@
 <?php	
 	include 'databaseFunctions.php';
-	$query = $_GET['query'];
+	$query = stripslashes($_GET['query']);
 	print executeQuery($query);
 ?>
 
