@@ -1,7 +1,7 @@
 -- ****************** SqlDBM: MySQL ******************;
 -- ***************************************************;
  
--- USE table-name;
+-- USE database-name;
 -- ************************************** `employee`
 
 CREATE TABLE `employees`
@@ -32,7 +32,7 @@ CREATE TABLE `suppliers`
  `supplier_id`        int NOT NULL AUTO_INCREMENT ,
  `company_name`       varchar(45) NOT NULL ,
  `contact_last_name`  varchar(45) NOT NULL ,
- `contact_first_name` varchar(45) NOT NULL ,
+ `contact_first_name` varchar(45) ,
  `phone`              varchar(15) NOT NULL ,
 
 PRIMARY KEY (`supplier_id`)
@@ -72,9 +72,9 @@ CREATE TABLE `books`
 
 PRIMARY KEY (`book_id`),
 KEY `fkIdx_64` (`supplier_id`),
-CONSTRAINT `FK_64` FOREIGN KEY `fkIdx_64` (`supplier_id`) REFERENCES `supplier` (`supplier_id`),
+CONSTRAINT `FK_64` FOREIGN KEY `fkIdx_64` (`supplier_id`) REFERENCES `suppliers` (`supplier_id`),
 KEY `fkIdx_67` (`subject_id`),
-CONSTRAINT `FK_67` FOREIGN KEY `fkIdx_67` (`subject_id`) REFERENCES `subject` (`subject_id`)
+CONSTRAINT `FK_67` FOREIGN KEY `fkIdx_67` (`subject_id`) REFERENCES `subjects` (`subject_id`)
 );
 
 -- ************************************** `order`
@@ -90,11 +90,11 @@ CREATE TABLE `orders`
 
 PRIMARY KEY (`order_id`),
 KEY `fkIdx_43` (`customer_id`),
-CONSTRAINT `FK_43` FOREIGN KEY `fkIdx_43` (`customer_id`) REFERENCES `customer` (`customer_id`),
+CONSTRAINT `FK_43` FOREIGN KEY `fkIdx_43` (`customer_id`) REFERENCES `customers` (`customer_id`),
 KEY `fkIdx_46` (`employee_id`),
-CONSTRAINT `FK_46` FOREIGN KEY `fkIdx_46` (`employee_id`) REFERENCES `employee` (`employee_id`),
+CONSTRAINT `FK_46` FOREIGN KEY `fkIdx_46` (`employee_id`) REFERENCES `employees` (`employee_id`),
 KEY `fkIdx_54` (`shipper_id`),
-CONSTRAINT `FK_54` FOREIGN KEY `fkIdx_54` (`shipper_id`) REFERENCES `shipper` (`shipper_id`)
+CONSTRAINT `FK_54` FOREIGN KEY `fkIdx_54` (`shipper_id`) REFERENCES `shippers` (`shipper_id`)
 );
 
 -- ************************************** `order_detail`
@@ -106,9 +106,9 @@ CREATE TABLE `order_details`
  `quantity` int NOT NULL ,
 
 KEY `fkIdx_81` (`book_id`),
-CONSTRAINT `FK_81` FOREIGN KEY `fkIdx_81` (`book_id`) REFERENCES `book` (`book_id`),
+CONSTRAINT `FK_81` FOREIGN KEY `fkIdx_81` (`book_id`) REFERENCES `books` (`book_id`),
 KEY `fkIdx_84` (`order_id`),
-CONSTRAINT `FK_84` FOREIGN KEY `fkIdx_84` (`order_id`) REFERENCES `order` (`order_id`)
+CONSTRAINT `FK_84` FOREIGN KEY `fkIdx_84` (`order_id`) REFERENCES `orders` (`order_id`)
 );
 
 -- ************** Populating Commands ****************;
