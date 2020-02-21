@@ -1,17 +1,23 @@
 <template>
   <div class="home">
     <b-container>
+      <h3>Tables</h3>
       <DatabaseTable
         :tables="formatedTable"
       />
       <div class="mb-4">
       <QueryInput
         @success="onSuccess"
+        @submitted="queryTable = null"
       />  
       </div>    
-      <DatabaseTable
-        :tables="queryTable"
-      />
+      <div 
+        v-show="!!queryTable">
+        <h3>Result</h3>
+        <DatabaseTable
+          :tables="queryTable"
+        />
+      </div>
     </b-container>    
   </div>
 </template>
@@ -34,11 +40,7 @@ export default {
     QueryInput
   },
   mounted () {
-    this.axios
-      .get('https://webhome.auburn.edu/~cah0077/api/bookstoreTables.php')
-      .then(response => {
-        this.tables = response.data
-      })
+    this.getTables()
   },
   computed: {
     formatedTable() {
@@ -57,8 +59,18 @@ export default {
     }
   },
   methods: {
+    getTables() {
+      this.axios
+        .get('https://webhome.auburn.edu/~cah0077/api/bookstoreTables.php')
+        .then(response => {
+          this.tables = response.data
+        })
+    },
     onSuccess(e) {
       this.queryTable = [e.data]
+      if (e.status == 426) {
+        this.getTables()
+      }
     }
   }
 }

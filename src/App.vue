@@ -32,7 +32,7 @@
     z-index: 1000;
   }
   #content {
-    margin-top: 70px;
+    margin-top: 90px;
   }
   .is-full-screen {
     margin: 0px !important;

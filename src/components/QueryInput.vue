@@ -11,7 +11,7 @@
           id="query"
           v-model="query"
           placeholder="Enter SQL query..."
-          rows="4"
+          rows="5"
         ></b-form-textarea>
       </b-form-group>
 
@@ -21,6 +21,9 @@
       <div v-show="hasDROP"
         class="error"
       >QUERY CANNOT CONTAIN 'DROP'</div>
+      <div v-show="!!errorMessage"
+        class="error"
+      >{{errorMessage}}</div>
     </b-form>
   </div>
 </template>
@@ -31,6 +34,7 @@ export default {
   data() {
     return {
       query: this.queryIn,
+      errorMessage: ''
     }
   },
   props: {
@@ -45,17 +49,21 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.errorMessage = ''
       if (this.hasDROP) {
         return
-      }      
+      }
+      this.$emit('submitted')
       this.axios
         .get('https://webhome.auburn.edu/~cah0077/api/query.php', {
            params: {          
             'query': this.query
           }
         })
-        .then(response => {
+        .then((response) => {
           this.$emit('success', response)
+        }).catch(error => {
+          this.errorMessage = error.response.data
         })
     }
   },

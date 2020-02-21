@@ -1,6 +1,6 @@
 <template>
   <div class="welcome">
-    <div class="background">
+    <div class="background" :class="{transitioning: transitioning}">
       <div class="back-1" :style="'transform: perspective(10000px) translateZ(40px) scale(' + scale / 10 * scaleFactor.s1 + ') translate(' + xyCor.x/.9 + 'px, ' + xyCor.y/.9 + 'px )'"></div>
       <div class="back-2" :style="'transform: perspective(100px) translateZ(10px) scale(' + scale / 10 * scaleFactor.s2 + ') translate(' + xyCor.x/3 + 'px, ' + xyCor.y/3 + 'px )'"></div>
       <div class="back-3" :style="'transform: perspective(0px) translateZ(2px) scale(' + scale / 10 * scaleFactor.s3 + ') translate(' + xyCor.x/10 + 'px, ' + xyCor.y/10 + 'px ) rotate(180deg)  scaleX(-1)'"></div>
@@ -8,7 +8,7 @@
     </div>
     <b-container>
       <h1 id="header">Byron's Bookstore</h1>
-      <router-link to="home" id="enter">Enter</router-link>
+      <a to="home" id="enter" @click="enterSite">Enter</a>
     </b-container>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
   name: 'welcome',
   data() {
     return {
+      transitioning: false,
       mousePos: {
         x: null,
         y: null
@@ -35,7 +36,8 @@ export default {
   components: {
   },
   mounted() {
-     window.addEventListener('mousemove',this.mouseIsMoving);
+    this.transitioning = false
+    window.addEventListener('mousemove',this.mouseIsMoving);
   },
   destroyed: function() {
     window.removeEventListener('mousemove', this.mouseIsMoving);
@@ -48,6 +50,16 @@ export default {
         x: x,
         y: y
       }
+    },
+    enterSite() {
+      this.transitioning = true
+      this.scaleFactor.s1 = 1.4
+      this.scaleFactor.s2 = 10
+      this.scaleFactor.s3 = 5
+      this.scaleFactor.s4 = 1.75
+      setTimeout(() => {        
+        this.$router.push('/home')
+      }, 500);
     }
   },
   computed: {
@@ -67,7 +79,7 @@ export default {
     height: 100vh;
     cursor: url(../assets/byron.png), auto;
     
-    font-family: 'Mr Dafoe', serif;
+    font-family: 'Meddon', serif;
     text-transform: capitalize;
 
     overflow: hidden;
@@ -75,7 +87,7 @@ export default {
 
   h1#header {
     padding-top: 15vh;
-    font-size: 4rem;
+    font-size: 2.5rem;
     color: white;
     text-align: center;
 
@@ -90,10 +102,10 @@ export default {
     transform: translate(-50%, -50%);
 
     font-weight: lighter;
-    font-size: 3rem;
+    font-size: 2rem;
     color: #e8fcff;
-    text-shadow: 0px 0px 30px #ffcb6a;
-    font-family: 'Mr Dafoe', serif;
+    text-shadow: 0px 0px 10px #ffcb6a6c;
+    font-family: 'Meddon', serif;
 
     /* text-transform: uppercase; */
     /* letter-spacing: .5rem; */
@@ -104,7 +116,7 @@ export default {
   }
   #enter:hover {
     text-shadow: 0px 0px 40px #ffba39;
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   .background {
@@ -128,7 +140,11 @@ export default {
     
     background-size: cover;
     background-position: center center;
-    position: absolute;
+    position: absolute;    
+  }
+
+  .background.transitioning > * {
+    transition: all .5s ease-in;
   }
   
   .back-1 {    
